@@ -50,11 +50,18 @@ dependencies {
     testImplementation "io.qameta.allure:allure-selenide:$allureVersion"
 
     testImplementation "io.rest-assured:rest-assured:$restAssuredVersion"
+
+    testImplementation 'org.aeonbits.owner:owner:1.0.12'
 }
 
 tasks.test {
     useJUnitPlatform()
     systemProperty "allure.results.directory", file("${buildDir}/allure-results").absolutePath
+
+    // pass through -Dphone=pixel|samsung|xiaomi from the gradle CLI
+    if (System.getProperty("phone")) {
+        systemProperty "phone", System.getProperty("phone")
+    }
 
     testLogging {
         events = ["started", "skipped", "failed", "standard_error", "standard_out"]
