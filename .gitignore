@@ -2,3 +2,11 @@
 /build
 /.gradle
 *.class
+
+# Gradle wrapper — provisioned locally / by CI, not tracked
+/gradlew
+/gradlew.bat
+/gradle/
+
+# Claude Code project instructions — local only
+CLAUDE.md

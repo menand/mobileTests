@@ -55,12 +55,24 @@ dependencies {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        // -Dtag overrides; otherwise derived from -Dplatform (android default matches credentials.properties)
+        def tag = System.getProperty("tag")
+        if (!tag) {
+            def platform = System.getProperty("platform") ?: "android"
+            tag = platform.equalsIgnoreCase("ios") ? "iphone" : "android"
+        }
+        includeTags tag
+    }
     systemProperty "allure.results.directory", file("${buildDir}/allure-results").absolutePath
 
-    // pass through -Dphone=pixel|samsung|xiaomi from the gradle CLI
+    // pass through -Dphone=pixel|samsung|xiaomi|iphone14|iphone13|iphone17|iphone17max
+    // and -Dplatform=android|ios
     if (System.getProperty("phone")) {
         systemProperty "phone", System.getProperty("phone")
+    }
+    if (System.getProperty("platform")) {
+        systemProperty "platform", System.getProperty("platform")
     }
 
     testLogging {

@@ -19,11 +19,21 @@ public interface BrowserstackConfig extends Config {
     @DefaultValue("https://hub.browserstack.com/wd/hub")
     String hub();
 
-    @Key("browserstack.app")
-    String app();
-
     @Key("browserstack.appiumVersion")
     String appiumVersion();
+
+    @Key("platform")
+    @DefaultValue("android")
+    String platform();
+
+    @Key("${platform}.platformName")
+    String platformName();
+
+    @Key("${platform}.automationName")
+    String automationName();
+
+    @Key("${platform}.app")
+    String app();
 
     @Key("phone")
     @DefaultValue("pixel")
